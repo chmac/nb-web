@@ -1,27 +1,30 @@
 import join from "globjoin";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import * as git from "./services/git/git.service";
-import { IDMap } from "./shared.types";
+import * as nb from "./services/nb/nb.service";
+import { Index } from "./shared.types";
 
 (window as any).join = join;
 
 const getIdMapFromPaths = async (paths: string[]) => {
   if (paths.length === 0) {
-    return {};
+    return [];
   }
   const path = join(...paths);
-  const idMap = await git.ls({ path });
-  return idMap;
+  const index = await nb.getIndex({ path });
+  return index;
 };
 
 function App() {
   const [paths, setPaths] = useState<string[]>([]);
-  const [idMap, setIdMap] = useState<IDMap>({});
+  const [index, setIndex] = useState<Index>([]);
   const [fileContents, setFileContents] = useState("");
+  const [search, setSearch] = useState("");
 
   const goToPath = useCallback(
     async (pathPiece: string) => {
       setFileContents("");
+      setSearch("");
       const newPaths =
         pathPiece === ".." && paths.length > 1
           ? paths.slice(0, -1)
@@ -29,10 +32,10 @@ function App() {
           ? [pathPiece]
           : paths.concat(pathPiece);
       setPaths(newPaths);
-      const idMap = await getIdMapFromPaths(newPaths);
-      setIdMap(idMap);
+      const index = await getIdMapFromPaths(newPaths);
+      setIndex(index);
     },
-    [setPaths, paths, setFileContents]
+    [setPaths, paths, setFileContents, setSearch]
   );
 
   const loadFile = useCallback(
@@ -43,6 +46,22 @@ function App() {
     },
     [paths]
   );
+
+  const filteredIndex = useMemo(() => {
+    if (search.length === 0) {
+      return index;
+    }
+
+    return index.filter(([id, name]) => {
+      if (id.toString().indexOf(search) !== -1) {
+        return true;
+      }
+      if (name.indexOf(search) !== -1) {
+        return true;
+      }
+      return false;
+    });
+  }, [index, search]);
 
   const path = join(...paths);
 
@@ -92,12 +111,22 @@ function App() {
       )}
       <div>
         <h2>Navigation</h2>
+        <p>
+          Search:{" "}
+          <input
+            value={search}
+            onChange={(event) => {
+              setSearch(event.currentTarget.value);
+            }}
+          />{" "}
+          ({index.length} items, {filteredIndex.length} matches)
+        </p>
         {paths.length === 0 ? null : (
           <p>
             <button onClick={() => goToPath("..")}>../</button>
           </p>
         )}
-        {Object.entries(idMap).map(([id, name]) => (
+        {filteredIndex.map(([id, name]) => (
           <p key={id}>
             <button
               onClick={async () => {

@@ -16,6 +16,4 @@ export type FS = {
   };
 };
 
-export type IDMap = {
-  [id: string]: string;
-};
+export type Index = [number, string][];

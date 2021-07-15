@@ -1,15 +1,10 @@
-import LightningFS from "@isomorphic-git/lightning-fs";
 import join from "globjoin";
 import git from "isomorphic-git";
 import http from "isomorphic-git/http/web";
-import { FS } from "../../shared.types";
-import { parseIndexContents } from "../nb/nb.service";
-
-const fs: FS = new LightningFS("fs");
+import { fs, dir } from "../../shared.constants";
 
 const URL_KEY = "__nbw_url" as const;
 
-const dir = "/repo";
 const url = window.localStorage.getItem(URL_KEY);
 
 if (url === null || url === "") {
@@ -46,16 +41,6 @@ export const pull = async () => {
       name: "nb-web",
     },
   });
-};
-
-export const ls = async ({ path = "/" }: { path?: string } = {}) => {
-  const indexContents = await fs.promises.readFile(join(dir, path, ".index"), {
-    encoding: "utf8",
-  });
-
-  const idMap = parseIndexContents({ contents: indexContents });
-
-  return idMap;
 };
 
 export const readFile = async ({ path }: { path: string }) => {
