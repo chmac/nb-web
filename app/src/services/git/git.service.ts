@@ -35,6 +35,19 @@ export const clone = async () => {
   });
 };
 
+export const pull = async () => {
+  await git.pull({
+    fs,
+    http,
+    dir,
+    url,
+    fastForwardOnly: true,
+    author: {
+      name: "nb-web",
+    },
+  });
+};
+
 export const ls = async ({ path = "/" }: { path?: string } = {}) => {
   const indexContents = await fs.promises.readFile(join(dir, path, ".index"), {
     encoding: "utf8",

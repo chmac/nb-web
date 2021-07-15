@@ -1,5 +1,5 @@
 import join from "globjoin";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import * as git from "./services/git/git.service";
 import { IDMap } from "./shared.types";
 
@@ -46,32 +46,50 @@ function App() {
 
   return (
     <div>
-      <p>Path: {path}</p>
+      <p>Current path: {path}</p>
       <p>
         <button
           onClick={async () => {
-            await git.clone();
-            alert("Cloned successfully #6Z3R6m");
+            try {
+              await git.clone();
+              alert("Cloned successfully #6Z3R6m");
+            } catch (error) {
+              alert(`Clone failed #f6AL6q\n${error.message}`);
+            }
           }}
         >
           Clone
         </button>
-      </p>
-      {fileContents === "" ? null : (
-        <blockquote>
-          <pre>{fileContents}</pre>
-        </blockquote>
-      )}
-      <p>
+        {" - "}
+        <button
+          onClick={async () => {
+            try {
+              await git.pull();
+              alert("Pulled successfully #SKoEv8");
+            } catch (error) {
+              alert(`Pull failed #R740Qp\n${error.message}`);
+            }
+          }}
+        >
+          Pull
+        </button>
+        {" - "}
         <button
           onClick={async () => {
             goToPath("/");
           }}
         >
-          ls
+          Load notebook
         </button>
       </p>
+      {fileContents === "" ? null : (
+        <blockquote>
+          <h2>Currently selected note:</h2>
+          <pre>{fileContents}</pre>
+        </blockquote>
+      )}
       <div>
+        <h2>Navigation</h2>
         {paths.length === 0 ? null : (
           <p>
             <button onClick={() => goToPath("..")}>../</button>
@@ -88,7 +106,7 @@ function App() {
                 }
               }}
             >
-              {id}: {name}
+              [{id}] {name}
             </button>
           </p>
         ))}
