@@ -25,6 +25,8 @@ function App() {
       const newPaths =
         pathPiece === ".." && paths.length > 1
           ? paths.slice(0, -1)
+          : pathPiece === "/"
+          ? [pathPiece]
           : paths.concat(pathPiece);
       setPaths(newPaths);
       const idMap = await getIdMapFromPaths(newPaths);
