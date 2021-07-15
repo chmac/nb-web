@@ -1,5 +1,6 @@
 import join from "globjoin";
 import React, { useCallback, useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import * as git from "./services/git/git.service";
 import * as nb from "./services/nb/nb.service";
 import { Index } from "./shared.types";
@@ -104,9 +105,9 @@ function App() {
         </button>
       </p>
       {fileContents === "" ? null : (
-        <blockquote>
+        <blockquote style={{ padding: "1rem 2rem", border: "1px black solid" }}>
           <h2>Currently selected note:</h2>
-          <pre>{fileContents}</pre>
+          <ReactMarkdown children={fileContents} />
         </blockquote>
       )}
       <div>
