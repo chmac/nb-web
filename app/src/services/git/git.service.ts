@@ -44,3 +44,11 @@ export const ls = async ({ path = "/" }: { path?: string } = {}) => {
 
   return idMap;
 };
+
+export const readFile = async ({ path }: { path: string }) => {
+  const filePath = join(dir, path);
+  const fileContents = await fs.promises.readFile(filePath, {
+    encoding: "utf8",
+  });
+  return fileContents;
+};
