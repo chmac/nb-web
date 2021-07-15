@@ -1718,6 +1718,11 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/globjoin@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@types/globjoin/-/globjoin-0.1.0.tgz#f557b58a8f75e12b06baf01b40b9b7085359382d"
+  integrity sha512-vLFlKLMVgcqq+PDJsasXzWQXoHXfbtB3pnDidERRJkutG8kPGEzyXhLk2PhBYxvNJqSm53THiVfqEHb/DRTtAQ==
+
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@types/graceful-fs/-/graceful-fs-4.1.5.tgz#21ffba0d98da4350db64891f92a9e5db3cdb4e15"
@@ -5364,6 +5369,11 @@ globby@^6.1.0:
     object-assign "^4.0.1"
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
+
+globjoin@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/globjoin/-/globjoin-0.1.4.tgz#2f4494ac8919e3767c5cbb691e9f463324285d43"
+  integrity sha1-L0SUrIkZ43Z8XLtpHp9GMyQoXUM=
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
   version "4.2.6"
