@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://chmac.github.io/nb-web",
   "dependencies": {
     "@isomorphic-git/lightning-fs": "^4.4.1",
     "@testing-library/jest-dom": "^5.11.4",
