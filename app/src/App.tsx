@@ -105,10 +105,14 @@ function App() {
         </button>
       </p>
       {fileContents === "" ? null : (
-        <blockquote style={{ padding: "1rem 2rem", border: "1px black solid" }}>
-          <h2>Currently selected note:</h2>
-          <ReactMarkdown children={fileContents} />
-        </blockquote>
+        <>
+          <h2>Selection</h2>
+          <blockquote
+            style={{ padding: "1rem 2rem", border: "1px black solid" }}
+          >
+            <ReactMarkdown children={fileContents} />
+          </blockquote>
+        </>
       )}
       <div>
         <h2>Navigation</h2>
