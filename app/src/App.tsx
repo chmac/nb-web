@@ -140,6 +140,7 @@ function App() {
                 } else {
                   loadFile(name);
                 }
+                window.scrollTo(0, 0);
               }}
             >
               [{id}] {name}
