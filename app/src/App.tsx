@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import * as git from "./services/git/git.service";
 
 function App() {
+  const [path, setPath] = useState("/");
+  const [ls, setLs] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <p>Path: {path}</p>
+      <p>
+        <button
+          onClick={async () => {
+            await git.clone();
+            alert("Cloned successfully #6Z3R6m");
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          Clone
+        </button>
+      </p>
+      <p>
+        <button
+          onClick={async () => {
+            const idMap = await git.ls({ path });
+            setLs(JSON.stringify(idMap));
+          }}
+        >
+          ls
+        </button>
+        <br />
+        {ls}
+      </p>
     </div>
   );
 }
